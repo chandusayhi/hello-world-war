@@ -1,16 +1,3 @@
- properties([
-                        parameters([
-                            choice(
-                                choices: ['package', 'compile'], 
-                                name: 'arg'
-                            ),
-                            string(
-                                defaultValue: 'clean', 
-                                name: 'version', 
-                                trim: true
-                            )
-                        ])
-                    ])
 pipeline{
   agent any
   stages{
@@ -27,13 +14,13 @@ pipeline{
     }
     stage('build'){
         steps{
-            sh 'mvn $version $arg'
+            sh 'mvn clean package'
         }
     }
     stage('deploy'){
         steps{
             sh 'whoami'
-            sh 'scp /var/lib/jenkins/workspace/pipeline_demo/target/hello-world-war-1.0.0.war tomcat_user@172.31.81.248:/tmp/apache-tomcat-8.5.100/webapps/'
+            sh 'scp /home/jenkins-slave-01/workspace/pipeline_demo/target/hello-world-war-1.0.0.war tomcat_user@172.31.81.248:/tmp/apache-tomcat-8.5.100/webapps/'
         }
     }
   }
