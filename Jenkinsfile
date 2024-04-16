@@ -10,7 +10,7 @@ pipeline{
     stage('clone'){
       steps{
         script{
-         checkout()
+         gitCheckout()
       }
       }
     }
